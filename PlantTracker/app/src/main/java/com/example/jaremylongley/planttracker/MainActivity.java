@@ -28,12 +28,6 @@ public class MainActivity extends AppCompatActivity {
         userPlants = new ArrayList<Plant>();
     }
 
-    // OnClick event for add button
-    public void addRowButtonClicked(View view) {
-        Intent intent = new Intent(this, UserPlantInformation.class);
-        startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -52,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
                 this.createPlant(imagePath, nameText, ageText, groupText, notesText);
             }
         }
+    }
+
+    // OnClick event for add button
+    public void addRowButtonClicked(View view) {
+        Intent intent = new Intent(this, UserPlantInformation.class);
+        startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
+    }
+
+    public void plantTableRowClicked(View view) {
+        
     }
 
     private void createPlant(String imagePath, String nameText, String ageText, String groupText, String notesText) {
