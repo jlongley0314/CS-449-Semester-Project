@@ -3,11 +3,20 @@ package com.example.jaremylongley.planttracker;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -51,24 +60,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.checklist :
+//                Intent intent = new Intent(this, AboutActivity.class);
+//                startActivity(intent);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     // OnClick event for add button
-    public void addRowButtonClicked(View view) {
+    public void addButtonClicked(View view) {
         Intent intent = new Intent(this, UserPlantInformation.class);
         startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
     }
 
-
-
     private void createPlant(String imagePath, String nameText, String ageText, String groupText, String notesText) {
         Plant newPlant = new Plant(imagePath, nameText, ageText, groupText, notesText);
         this.userPlants.add(newPlant);
-        TextView text = new TextView(this);
-        text.setText(nameText);
+        addRow(newPlant);
+    }
+
+    private void addRow(Plant plant) {
         TableLayout layout = (TableLayout) findViewById(R.id.mainTable);
+        TextView text = new TextView(this);
+        ImageView plantImageView = new ImageView(this);
         final TableRow newRow = new TableRow(this);
+//        plantImageView.setImageURI(Uri.parse(plant.getImagePath()));
+
+        text.setText(plant.getName());
+        text.setTextSize(20);
+        text.setGravity(Gravity.CENTER);
+        text.setPadding(0, 200, 0, 0);
         Log.d("2","Adding table row");
-        newRow.setClickable(true);
+//        newRow.setClickable(true);
         newRow.setTag((this.userPlants.size()-1));
+//        newRow.addView(plantImageView);
         newRow.addView(text);
         newRow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 plantTableRowClicked((Integer) newRow.getTag());
             }
         });
+        newRow.setPadding(0, 20, 0 , 20);
         layout.addView(newRow);
     }
 
@@ -89,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("groupText", plantClicked.getGroup());
         intent.putExtra("notesText", plantClicked.getNotes());
         intent.putExtra("plantImage", plantClicked.getImagePath());
-        intent.putExtra("progressImages", plantClicked.getProgressImages());
         startActivity(intent);
     }
 

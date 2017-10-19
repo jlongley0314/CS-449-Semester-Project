@@ -84,7 +84,7 @@ public class UserPlantInformation extends AppCompatActivity {
             Uri selectedImage = data.getData();
             // Get address of selected image and display
             plantImage.setImageURI(selectedImage);
-            plantImageString = selectedImage.getPath();
+            plantImageString = selectedImage.toString();
         }
     }
 
