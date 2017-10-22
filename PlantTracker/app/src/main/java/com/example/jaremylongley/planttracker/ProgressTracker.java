@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,13 +40,12 @@ public class ProgressTracker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
-        Intent intent = getIntent();
-        String nameText = intent.getStringExtra("nameText");
-        String ageText = intent.getStringExtra("ageText");
-        String groupText = intent.getStringExtra("groupText");
-        String notesText = intent.getStringExtra("notesText");
-//        this.imagePath = intent.getStringExtra("plantImage");
-        displayingPlant = new Plant(intent.getStringExtra("plantImage"), nameText, ageText,groupText, notesText);
+//        Intent intent = getIntent();
+//        String nameText = intent.getStringExtra("nameText");
+//        String ageText = intent.getStringExtra("ageText");
+//        String groupText = intent.getStringExtra("groupText");
+//        String notesText = intent.getStringExtra("notesText");
+//        displayingPlant = new Plant(intent.getStringExtra("plantImage"), nameText, ageText,groupText, notesText);
         initTable();
     }
 
@@ -76,6 +76,12 @@ public class ProgressTracker extends AppCompatActivity {
         builder.show();
     }
 
+    // OnClick event for checklist to be shown
+    public void viewChecklistButtonClicked(View view) {
+        Intent intent = new Intent(this, Checklist.class);
+        startActivity(intent);
+    }
+
     void addRow(String progressText) {
         TableLayout layout = (TableLayout) findViewById(R.id.ProgressTable);
         TableRow dummyRow = new TableRow(this);
@@ -98,7 +104,7 @@ public class ProgressTracker extends AppCompatActivity {
         TextView dateColumn = new TextView(this);
         TextView notesColumn = new TextView(this);
         title.setPadding(3,3,3,3);
-        title.setText(displayingPlant.getName() + "'s Progress");
+        title.setText("Your Plant's Progress");
         title.setTextSize(30);
         dateColumn.setText("Date");
         dateColumn.setTextSize(25);

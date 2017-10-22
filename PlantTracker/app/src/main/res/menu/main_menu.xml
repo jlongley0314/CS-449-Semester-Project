@@ -10,7 +10,7 @@
         app:showAsAction="always">
 
         <menu>
-            <item android:id="@+id/checklist"
+            <item android:id="@+id/checklistButton"
                 android:title="Your Checklist"
                 app:showAsAction="ifRoom"
                 />

@@ -7,6 +7,20 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/viewChecklistButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/ic_checklist"
+        android:backgroundTint="#00E676"
+        android:elevation="0dp"
+        android:onClick="viewChecklistButtonClicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
         android:id="@+id/addProgressButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="55dp"

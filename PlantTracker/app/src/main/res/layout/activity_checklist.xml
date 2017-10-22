@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="25"
+            android:textSize="20sp"
+            android:text="Name"
+            android:textAlignment="center"
+            android:paddingTop="10sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nameHeader"/>
+        <TextView
+            android:layout_weight="25"
+            android:textSize="20sp"
+            android:text="Watered"
+            android:textAlignment="center"
+            android:paddingTop="10sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/wateredHeader"/>
+        <TextView
+            android:layout_weight="25"
+            android:textSize="20sp"
+            android:text="Pruned"
+            android:textAlignment="center"
+            android:paddingTop="10sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/prunedHeader"/>
+        <TextView
+            android:layout_weight="25"
+            android:textSize="20sp"
+            android:text="Repotted"
+            android:textAlignment="center"
+            android:paddingTop="10sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/repottedHeader"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"/>
+</LinearLayout>

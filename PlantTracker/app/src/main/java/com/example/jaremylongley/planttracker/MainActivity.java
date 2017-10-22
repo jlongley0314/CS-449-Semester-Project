@@ -1,11 +1,7 @@
 package com.example.jaremylongley.planttracker;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,16 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,12 +61,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.checklist :
-//                Intent intent = new Intent(this, AboutActivity.class);
-//                startActivity(intent);
+            case R.id.checklistButton:
+                Intent intent = new Intent(this, Checklist.class);
+                startActivity(intent);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,38 +86,44 @@ public class MainActivity extends AppCompatActivity {
         TextView text = new TextView(this);
         ImageView plantImageView = new ImageView(this);
         final TableRow newRow = new TableRow(this);
-//        plantImageView.setImageURI(Uri.parse(plant.getImagePath()));
+        plantImageView.setImageURI(Uri.parse(plant.getImagePath()));
 
         text.setText(plant.getName());
         text.setTextSize(20);
         text.setGravity(Gravity.CENTER);
         text.setPadding(0, 200, 0, 0);
         Log.d("2","Adding table row");
-//        newRow.setClickable(true);
-        newRow.setTag((this.userPlants.size()-1));
-//        newRow.addView(plantImageView);
+        newRow.setClickable(true);
+        newRow.addView(plantImageView);
         newRow.addView(text);
-        newRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                plantTableRowClicked((Integer) newRow.getTag());
-            }
-        });
         newRow.setPadding(0, 20, 0 , 20);
         layout.addView(newRow);
     }
 
-    // OnClick event for plant clicked
-    public void plantTableRowClicked(int tag) {
+    // Click listener for Progress button
+    public void plantProgressButtonClicked(View view) {
         Intent intent = new Intent(this, ProgressTracker.class);
         System.out.println("Got the intent");
-        Plant plantClicked = this.userPlants.get(tag);
-        intent.putExtra("nameText", plantClicked.getName());
-        intent.putExtra("ageText", plantClicked.getAge());
-        intent.putExtra("groupText", plantClicked.getGroup());
-        intent.putExtra("notesText", plantClicked.getNotes());
-        intent.putExtra("plantImage", plantClicked.getImagePath());
+//        Plant plantClicked = this.userPlants.get(tag);
+//        intent.putExtra("nameText", plantClicked.getName());
+//        intent.putExtra("ageText", plantClicked.getAge());
+//        intent.putExtra("groupText", plantClicked.getGroup());
+//        intent.putExtra("notesText", plantClicked.getNotes());
+//        intent.putExtra("plantImage", plantClicked.getImagePath());
         startActivity(intent);
     }
+
+    // OnClick event for plant clicked
+//    public void plantTableRowClicked(int tag) {
+//        Intent intent = new Intent(this, ProgressTracker.class);
+//        System.out.println("Got the intent");
+//        Plant plantClicked = this.userPlants.get(tag);
+//        intent.putExtra("nameText", plantClicked.getName());
+//        intent.putExtra("ageText", plantClicked.getAge());
+//        intent.putExtra("groupText", plantClicked.getGroup());
+//        intent.putExtra("notesText", plantClicked.getNotes());
+//        intent.putExtra("plantImage", plantClicked.getImagePath());
+//        startActivity(intent);
+//    }
 
 }
