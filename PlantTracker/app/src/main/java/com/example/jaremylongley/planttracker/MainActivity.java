@@ -15,20 +15,22 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int SECOND_ACTIVITY_RESULT_CODE = 0;
     private static final int PROGRESS_ACTIVITY_RESULT_CODE = 1;
+    DatabaseHelper db;
     List<Plant> userPlants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userPlants = new ArrayList<Plant>();
+        this.db = new DatabaseHelper(this);
+        this.reloadRows();
+//        userPlants = new ArrayList<Plant>();
     }
 
     @Override
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 String notesText = data.getStringExtra("notesText");
                 String imagePath = data.getStringExtra("plantImage");
                 Log.d("1", "Got data");
+
                 this.createPlant(imagePath, nameText, ageText, groupText, notesText);
             }
         }
@@ -76,9 +79,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createPlant(String imagePath, String nameText, String ageText, String groupText, String notesText) {
-        Plant newPlant = new Plant(imagePath, nameText, ageText, groupText, notesText);
-        this.userPlants.add(newPlant);
-        addRow(newPlant);
+        int plantID = db.getPlantCount() + 1;
+        Plant newPlant = new Plant(plantID, imagePath, nameText, ageText, groupText);
+        db.addPlant(plantID, imagePath, nameText, ageText, groupText);
+        System.out.println("Added new plant, new database length:");
+        System.out.println(db.getPlantCount());
+//        this.userPlants.add(newPlant);
+        this.reloadRows();
     }
 
     private void addRow(Plant plant) {
@@ -89,15 +96,25 @@ public class MainActivity extends AppCompatActivity {
         plantImageView.setImageURI(Uri.parse(plant.getImagePath()));
 
         text.setText(plant.getName());
+        System.out.println(plant.getName());
         text.setTextSize(20);
         text.setGravity(Gravity.CENTER);
         text.setPadding(0, 200, 0, 0);
         Log.d("2","Adding table row");
         newRow.setClickable(true);
-        newRow.addView(plantImageView);
+//        newRow.addView(plantImageView);
         newRow.addView(text);
         newRow.setPadding(0, 20, 0 , 20);
         layout.addView(newRow);
+    }
+
+    private void reloadRows() {
+        this.userPlants = db.getAllPlants();
+        System.out.println("SIZE OF DATABASE:" + this.userPlants.size());
+        for (int i = 0; i<this.userPlants.size(); i++) {
+            Plant newPlant = this.userPlants.get(i);
+            this.addRow(newPlant);
+        }
     }
 
     // Click listener for Progress button

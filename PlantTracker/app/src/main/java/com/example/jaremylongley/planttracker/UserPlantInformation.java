@@ -29,7 +29,6 @@ public class UserPlantInformation extends AppCompatActivity {
     String nameText;
     String ageText;
     String groupText;
-    String notesText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class UserPlantInformation extends AppCompatActivity {
         EditText nameField = (EditText) findViewById(R.id.plantNameText);
         EditText ageField = (EditText) findViewById(R.id.plantAgeText);
         EditText groupField = (EditText) findViewById(R.id.plantGroupText);
-        EditText notesfield = (EditText) findViewById(R.id.otherNotesText);
 
         // put the text in an intent to send back to mainActivity
         this.nameText = nameField.getText().toString();
@@ -66,8 +64,6 @@ public class UserPlantInformation extends AppCompatActivity {
         intent.putExtra("ageText", this.ageText);
         this.groupText = groupField.getText().toString();
         intent.putExtra("groupText", this.groupText);
-        this.notesText = notesfield.getText().toString();
-        intent.putExtra("notesText", this.notesText);
         intent.putExtra("plantImage", this.plantImageString);
 
         setResult(RESULT_OK, intent);

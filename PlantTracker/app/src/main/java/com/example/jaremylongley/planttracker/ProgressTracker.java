@@ -12,26 +12,23 @@ import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 import java.text.DateFormat;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jaremylongley on 10/8/17.
  */
 
 public class ProgressTracker extends AppCompatActivity {
+    List<Plant> userPlants;
+    DatabaseHelper db;
     Plant displayingPlant;
     String date;
     String imagePath;
@@ -40,12 +37,8 @@ public class ProgressTracker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
-//        Intent intent = getIntent();
-//        String nameText = intent.getStringExtra("nameText");
-//        String ageText = intent.getStringExtra("ageText");
-//        String groupText = intent.getStringExtra("groupText");
-//        String notesText = intent.getStringExtra("notesText");
-//        displayingPlant = new Plant(intent.getStringExtra("plantImage"), nameText, ageText,groupText, notesText);
+        this.db = new DatabaseHelper(this);
+        this.userPlants = db.getAllPlants();
         initTable();
     }
 

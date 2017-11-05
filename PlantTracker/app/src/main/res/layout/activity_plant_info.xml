@@ -86,25 +86,6 @@
                 android:inputType="text"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="Other notes:"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/otherNotesText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.11"
-                android:ems="10"
-                android:hint="Other important details"
-                android:imeOptions="actionDone"
-                android:inputType="textMultiLine"
-                android:singleLine="false" />
 
             <Button
                 android:id="@+id/submitButton"

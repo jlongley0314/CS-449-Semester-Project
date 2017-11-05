@@ -9,21 +9,25 @@ import java.util.ArrayList;
  */
 
 public class Plant {
+    private int UID;
     String mainImage;
     ArrayList<String> progressImages;
     String name;
     String age;
     String group;
-    String notes;
+//    String notes;
 
-    public Plant(String imagePath, String name, String age, String group, String notes) {
+    public Plant(int UID, String imagePath, String name, String age, String group) {
+        this.UID = UID;
         this.mainImage = imagePath;
         this.name = name;
         this.age = age;
         this.group = group;
-        this.notes = notes;
+//        this.notes = notes;
         this.progressImages = new ArrayList<String>();
     }
+
+    public int getUID() { return this.UID; }
 
     public String getImagePath() {
         return mainImage;
@@ -57,13 +61,13 @@ public class Plant {
         this.group = group;
     }
 
-    public String getNotes() {
-        return notes;
-    }
+//    public String getNotes() {
+//        return notes;
+//    }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+//    public void setNotes(String notes) {
+//        this.notes = notes;
+//    }
 
     public ArrayList<String> getProgressImages() { return progressImages; }
 
