@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.db = new DatabaseHelper(this);
         this.reloadRows();
-//        userPlants = new ArrayList<Plant>();
     }
 
     @Override
@@ -40,16 +39,8 @@ public class MainActivity extends AppCompatActivity {
         // check that it is the SecondActivity with an OK result
         if (requestCode == SECOND_ACTIVITY_RESULT_CODE) {
             if (resultCode == RESULT_OK) {
-
-                // get data from Intent
-                String nameText = data.getStringExtra("nameText");
-                String ageText = data.getStringExtra("ageText");
-                String groupText = data.getStringExtra("groupText");
-                String notesText = data.getStringExtra("notesText");
-                String imagePath = data.getStringExtra("plantImage");
                 Log.d("1", "Got data");
-
-                this.createPlant(imagePath, nameText, ageText, groupText, notesText);
+                this.reloadRows();
             }
         }
     }
@@ -78,23 +69,11 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
     }
 
-    private void createPlant(String imagePath, String nameText, String ageText, String groupText, String notesText) {
-        int plantID = db.getPlantCount() + 1;
-        Plant newPlant = new Plant(plantID, imagePath, nameText, ageText, groupText);
-        db.addPlant(plantID, imagePath, nameText, ageText, groupText);
-        System.out.println("Added new plant, new database length:");
-        System.out.println(db.getPlantCount());
-//        this.userPlants.add(newPlant);
-        this.reloadRows();
-    }
-
     private void addRow(Plant plant) {
         TableLayout layout = (TableLayout) findViewById(R.id.mainTable);
         TextView text = new TextView(this);
         ImageView plantImageView = new ImageView(this);
         final TableRow newRow = new TableRow(this);
-        plantImageView.setImageURI(Uri.parse(plant.getImagePath()));
-
         text.setText(plant.getName());
         System.out.println(plant.getName());
         text.setTextSize(20);
@@ -102,9 +81,21 @@ public class MainActivity extends AppCompatActivity {
         text.setPadding(0, 200, 0, 0);
         Log.d("2","Adding table row");
         newRow.setClickable(true);
-//        newRow.addView(plantImageView);
+        newRow.addView(plantImageView);
+        plantImageView.setImageBitmap(plant.getImagePath());
+        plantImageView.getLayoutParams().height = 500;
+        plantImageView.getLayoutParams().width = 500;
+        plantImageView.requestLayout();
         newRow.addView(text);
+        newRow.setTag(plant.getUID());
+        Log.d("1", "Plant UID" + plant.getUID());
         newRow.setPadding(0, 20, 0 , 20);
+        newRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                plantTableRowClicked((Integer) newRow.getTag());
+            }
+        });
         layout.addView(newRow);
     }
 
@@ -113,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("SIZE OF DATABASE:" + this.userPlants.size());
         for (int i = 0; i<this.userPlants.size(); i++) {
             Plant newPlant = this.userPlants.get(i);
+            Log.d("1", "Adding row for plant UID: " + newPlant.getUID());
             this.addRow(newPlant);
         }
     }
@@ -131,16 +123,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // OnClick event for plant clicked
-//    public void plantTableRowClicked(int tag) {
-//        Intent intent = new Intent(this, ProgressTracker.class);
-//        System.out.println("Got the intent");
-//        Plant plantClicked = this.userPlants.get(tag);
-//        intent.putExtra("nameText", plantClicked.getName());
-//        intent.putExtra("ageText", plantClicked.getAge());
-//        intent.putExtra("groupText", plantClicked.getGroup());
-//        intent.putExtra("notesText", plantClicked.getNotes());
-//        intent.putExtra("plantImage", plantClicked.getImagePath());
-//        startActivity(intent);
-//    }
+    public void plantTableRowClicked(int tag) {
+        Intent intent = new Intent(this, ProgressTracker.class);
+        System.out.println("Got the intent");
+        Plant plantClicked = this.userPlants.get(tag-1);
+        intent.putExtra("plantUID", plantClicked.getUID());
+        startActivity(intent);
+    }
 
 }

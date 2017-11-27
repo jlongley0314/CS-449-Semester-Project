@@ -1,7 +1,10 @@
 package com.example.jaremylongley.planttracker;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -10,16 +13,19 @@ import java.util.ArrayList;
 
 public class Plant {
     private int UID;
-    String mainImage;
+    Bitmap mainImage;
     ArrayList<String> progressImages;
     String name;
     String age;
     String group;
+    String lastRepotted;
+    String lastWatered;
+    String lastPruned;
 //    String notes;
 
-    public Plant(int UID, String imagePath, String name, String age, String group) {
+    public Plant(int UID, Bitmap image, String name, String age, String group) {
         this.UID = UID;
-        this.mainImage = imagePath;
+        this.mainImage = image;
         this.name = name;
         this.age = age;
         this.group = group;
@@ -29,12 +35,12 @@ public class Plant {
 
     public int getUID() { return this.UID; }
 
-    public String getImagePath() {
+    public Bitmap getImagePath() {
         return mainImage;
     }
 
-    public void setImagePath(String imagePath) {
-        this.mainImage = imagePath;
+    public void setImagePath(Bitmap image) {
+        this.mainImage = image;
     }
 
     public String getName() {
@@ -69,9 +75,19 @@ public class Plant {
 //        this.notes = notes;
 //    }
 
-    public ArrayList<String> getProgressImages() { return progressImages; }
+    public byte[] getImageBytes() {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        this.mainImage.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
 
-    public void appendProgressImage(String imagePath) {
-        this.progressImages.add(imagePath);
+    public void setLastWatered(String date) {
+        this.lastWatered = date;
+    }
+    public void setLastPruned(String date) {
+        this.lastPruned = date;
+    }
+    public void setLastRepotted(String date) {
+        this.lastRepotted = date;
     }
 }

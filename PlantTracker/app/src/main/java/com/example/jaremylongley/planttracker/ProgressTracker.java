@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -27,25 +28,29 @@ import java.util.List;
  */
 
 public class ProgressTracker extends AppCompatActivity {
-    List<Plant> userPlants;
     DatabaseHelper db;
     Plant displayingPlant;
     String date;
     String imagePath;
+    List<Plant> userPlants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
+        Intent intent = getIntent();
         this.db = new DatabaseHelper(this);
+        int plantUID = intent.getIntExtra("plantUID", 1);
+        Log.d("1", "Got data" + plantUID);
         this.userPlants = db.getAllPlants();
+        this.displayingPlant = this.userPlants.get(plantUID - 1);
         initTable();
     }
 
     void addProgressButtonClicked(View view) {
         // Alert the user to add text to this progress report
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
-        builder.setTitle("Report Your Plant's Progress Since Last Report");
+        builder.setTitle("Give a short update to your plant");
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -72,6 +77,7 @@ public class ProgressTracker extends AppCompatActivity {
     // OnClick event for checklist to be shown
     public void viewChecklistButtonClicked(View view) {
         Intent intent = new Intent(this, Checklist.class);
+        intent.putExtra("plantUID", this.displayingPlant.getUID());
         startActivity(intent);
     }
 
@@ -80,7 +86,7 @@ public class ProgressTracker extends AppCompatActivity {
         TableRow dummyRow = new TableRow(this);
         TextView date = new TextView(this);
         TextView notes = new TextView(this);
-        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
         date.setText(currentDateTimeString);
         notes.setText(progressText);
         dummyRow.addView(date);
@@ -97,7 +103,7 @@ public class ProgressTracker extends AppCompatActivity {
         TextView dateColumn = new TextView(this);
         TextView notesColumn = new TextView(this);
         title.setPadding(3,3,3,3);
-        title.setText("Your Plant's Progress");
+        title.setText("Your Progress for " + this.displayingPlant.getName());
         title.setTextSize(30);
         dateColumn.setText("Date");
         dateColumn.setTextSize(25);

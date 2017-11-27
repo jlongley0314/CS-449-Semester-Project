@@ -4,58 +4,48 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Add the dates of latest activities:"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_weight="25"
-            android:textSize="20sp"
-            android:text="Name"
-            android:textAlignment="center"
-            android:paddingTop="10sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/nameHeader"/>
-        <TextView
-            android:layout_weight="25"
-            android:textSize="20sp"
-            android:text="Watered"
-            android:textAlignment="center"
-            android:paddingTop="10sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/wateredHeader"/>
-        <TextView
-            android:layout_weight="25"
-            android:textSize="20sp"
-            android:text="Pruned"
-            android:textAlignment="center"
-            android:paddingTop="10sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/prunedHeader"/>
-        <TextView
-            android:layout_weight="25"
-            android:textSize="20sp"
-            android:text="Repotted"
-            android:textAlignment="center"
-            android:paddingTop="10sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/repottedHeader"/>
-
-    </LinearLayout>
-
-    <ListView
+    <EditText
+        android:id="@+id/wateredText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listView"/>
+        android:layout_height="wrap_content"
+        android:hint="Last Watered:"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/prunedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Last Pruned::"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/repottedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Last Repotted:"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="savePressed"
+        android:text="Save" />
+
 </LinearLayout>
