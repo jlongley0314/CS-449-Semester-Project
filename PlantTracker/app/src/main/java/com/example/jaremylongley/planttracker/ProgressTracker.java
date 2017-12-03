@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -31,7 +33,11 @@ public class ProgressTracker extends AppCompatActivity {
     DatabaseHelper db;
     Plant displayingPlant;
     String date;
-    String imagePath;
+    String progressString;
+    String repottedString;
+    String wateredString;
+    String prunedString;
+    Boolean fromChecklist = false;
     List<Plant> userPlants;
 
     @Override
@@ -44,10 +50,50 @@ public class ProgressTracker extends AppCompatActivity {
         Log.d("1", "Got data" + plantUID);
         this.userPlants = db.getAllPlants();
         this.displayingPlant = this.userPlants.get(plantUID - 1);
-        initTable();
     }
 
-    void addProgressButtonClicked(View view) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.print("Coming in from seperate intent");
+        // check that it is the SecondActivity with an OK result
+        if (resultCode == RESULT_OK) {
+            Log.d("1", "Got data");
+            // get data from Intent
+            this.repottedString = data.getStringExtra("repotted");
+            this.wateredString = data.getStringExtra("watered");
+            this.prunedString = data.getStringExtra("pruned");
+            this.fromChecklist = true;
+            addRow();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.checklistButton:
+                viewChecklistButtonClicked();
+                return true;
+            case R.id.addProgressButton:
+                addProgressButtonClicked();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void updateProgress(String progress) {
+        this.progressString = progress;
+        addRow();
+    }
+
+    void addProgressButtonClicked() {
         // Alert the user to add text to this progress report
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
         builder.setTitle("Give a short update to your plant");
@@ -61,7 +107,7 @@ public class ProgressTracker extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String progressText = input.getText().toString();
-                addRow(progressText);
+                updateProgress(progressText);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -75,44 +121,45 @@ public class ProgressTracker extends AppCompatActivity {
     }
 
     // OnClick event for checklist to be shown
-    public void viewChecklistButtonClicked(View view) {
+    public void viewChecklistButtonClicked() {
         Intent intent = new Intent(this, Checklist.class);
         intent.putExtra("plantUID", this.displayingPlant.getUID());
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
-    void addRow(String progressText) {
+    void addRow() {
         TableLayout layout = (TableLayout) findViewById(R.id.ProgressTable);
-        TableRow dummyRow = new TableRow(this);
+        TableRow newRow = new TableRow(this);
         TextView date = new TextView(this);
         TextView notes = new TextView(this);
+        TextView watered = new TextView(this);
+        TextView pruned = new TextView(this);
+        TextView repotted = new TextView(this);
         String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
         date.setText(currentDateTimeString);
-        notes.setText(progressText);
-        dummyRow.addView(date);
-        dummyRow.addView(notes);
-        layout.addView(dummyRow, 2);
-    }
+        notes.setText(this.progressString);
+        if (this.fromChecklist) {
+            watered.setText(this.wateredString);
+            pruned.setText(this.prunedString);
+            repotted.setText(this.repottedString);
+        } else {
+            watered.setText("");
+            pruned.setText("");
+            repotted.setText("");
+        }
 
-    void initTable() {
-        //This part defines the layout to be used for creating new rows
-        TableLayout layout = (TableLayout) findViewById(R.id.ProgressTable);
-        TableRow  titleRow = new TableRow(this);
-        TableRow layoutRow = new TableRow(this);
-        TextView title = new TextView(this);
-        TextView dateColumn = new TextView(this);
-        TextView notesColumn = new TextView(this);
-        title.setPadding(3,3,3,3);
-        title.setText("Your Progress for " + this.displayingPlant.getName());
-        title.setTextSize(30);
-        dateColumn.setText("Date");
-        dateColumn.setTextSize(25);
-        notesColumn.setText("Notes");
-        notesColumn.setTextSize(25);
-        titleRow.addView(title);
-        layoutRow.addView(dateColumn);
-        layoutRow.addView(notesColumn);
-        layout.addView(titleRow,0);
-        layout.addView(layoutRow,1);
+        newRow.addView(date);
+        newRow.addView(notes);
+        newRow.addView(watered);
+        newRow.addView(pruned);
+        newRow.addView(repotted);
+        layout.addView(newRow);
+
+        // reset all variables
+        this.progressString = "";
+        this.prunedString = "";
+        this.wateredString = "";
+        this.repottedString = "";
+        this.fromChecklist = false;
     }
 }

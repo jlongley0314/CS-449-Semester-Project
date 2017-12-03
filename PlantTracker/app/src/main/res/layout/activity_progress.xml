@@ -1,59 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ProgressTable"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_weight="0"
+    android:padding="5dp">
 
-    <Button
-        android:id="@+id/viewChecklistButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/ic_checklist"
-        android:backgroundTint="#00E676"
-        android:elevation="0dp"
-        android:onClick="viewChecklistButtonClicked"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+    <TableRow android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/addProgressButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/ic_action_name"
-        android:backgroundTint="#00E676"
-        android:elevation="0dp"
-        android:onClick="addProgressButtonClicked"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:id="@+id/dateLabel"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="Date" />
 
-    <ScrollView
-        android:layout_width="369dp"
-        android:layout_height="499dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        <TextView
+            android:id="@+id/notesLabel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Your Notes" />
 
-        <TableLayout
-            android:id="@+id/ProgressTable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="2">
+        <TextView
+            android:id="@+id/wateredLabel"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Watered" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+        <TextView
+            android:id="@+id/prunedLabel"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Pruned" />
 
-            </TableRow>
-        </TableLayout>
+        <TextView
+            android:id="@+id/repottedLabel"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Repotted" />
+    </TableRow>
 
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</TableLayout>

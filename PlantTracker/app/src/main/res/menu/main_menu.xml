@@ -14,6 +14,10 @@
                 android:title="Your Checklist"
                 app:showAsAction="ifRoom"
                 />
+            <item android:id="@+id/addProgressButton"
+                android:title="Add Progress"
+                app:showAsAction="ifRoom"
+                />
         </menu>
     </item>
 

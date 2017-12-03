@@ -79,6 +79,22 @@ public class Checklist extends AppCompatActivity {
             db.updateLastRepotted(this.ID, this.repottedText.getText().toString());
         }
 
+        intent.putExtra("watered", this.wateredText.getText().toString());
+        intent.putExtra("pruned", this.prunedText.getText().toString());
+        intent.putExtra("repotted", this.repottedText.getText().toString());
+        /*
+        * // get the text from all the data fields in order to send back
+        EditText nameField = (EditText) findViewById(R.id.plantNameText);
+        EditText ageField = (EditText) findViewById(R.id.plantAgeText);
+        EditText groupField = (EditText) findViewById(R.id.plantGroupText);
+        EditText notesfield = (EditText) findViewById(R.id.otherNotesText);
+
+        // put the text in an intent to send back to mainActivity
+        this.nameText = nameField.getText().toString();
+        intent.putExtra("nameText", this.nameText);
+        * */
+
+
         setResult(RESULT_OK, intent);
         finish();
     }
